@@ -7,7 +7,9 @@ import App from './views/App'
 import Hello from './views/Hello'
 import Home from './views/Home'
 import UsersIndex from './views/UsersIndex'
-import UsersEdit from './views/UsersEdit';
+import UsersEdit from './views/UsersEdit'
+
+
 
 const router = new VueRouter({
     mode: 'history',
@@ -32,6 +34,7 @@ const router = new VueRouter({
             name: 'users.edit',
             component: UsersEdit,
         },
+       
     ],
 });
 
@@ -40,3 +43,4 @@ const app = new Vue({
     components: { App },
     router,
 });
+

@@ -2,7 +2,7 @@
   <div>
       <div v-if="message" class="alert">{{ message }}</div>
       <div v-if="! loaded">Loading...</div>
-      <form @submit.prevent="onSubmit" v-else>
+      <form @submit.prevent="onSubmit()" v-else>
         <div class="form-group">
             <label for="user_name">Name</label>
             <input id="user_name" v-model="user.name" />
@@ -12,8 +12,8 @@
             <input id="user_email" type="email" v-model="user.email" />
         </div>
         <div class="form-group">
-            <button type="submit" :disabled="saving">Update</button>
-            <button :disabled="saving" @click.prevent="onDelete">Delete</button>
+               <button type="submit" :disabled="saving">Update</button>
+         <button :disabled="saving" @click.prevent="onDelete($event)">Delete</button>
         </div>
     </form>
   </div>
@@ -42,29 +42,34 @@ export default {
       });
   },
 methods:{
- onSubmit($event) {
+ onSubmit(event) {
   this.saving = true;
 
   api.update(this.user.id, {
       name: this.user.name,
       email: this.user.email,
-  }).then((response) => {
+  }).then(response=>{
       this.message = 'User updated';
       setTimeout(() => this.message = null, 2000);
       this.user = response.data.data;
+      this.saving = false
   }).catch(error => {
       console.log(error)
-  }).then(_ => this.saving = false);
+  });
 },
-onDelete($event) {
+onDelete(event) {
   this.saving = true;
   api.delete(this.user.id)
-     .then((response) => {
+     .then(response => {
         this.message = 'User Deleted';
         setTimeout(() => this.$router.push({ name: 'users.index' }), 2000);
+     }).catch(function (error) {
+       console.log(error)
      });
 }
-}
+},
+
+
   
 }
 </script>

@@ -1912,7 +1912,7 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    onSubmit: function onSubmit($event) {
+    onSubmit: function onSubmit(event) {
       var _this2 = this;
 
       this.saving = true;
@@ -1925,13 +1925,12 @@ __webpack_require__.r(__webpack_exports__);
           return _this2.message = null;
         }, 2000);
         _this2.user = response.data.data;
+        _this2.saving = false;
       })["catch"](function (error) {
         console.log(error);
-      }).then(function (_) {
-        return _this2.saving = false;
       });
     },
-    onDelete: function onDelete($event) {
+    onDelete: function onDelete(event) {
       var _this3 = this;
 
       this.saving = true;
@@ -1942,6 +1941,8 @@ __webpack_require__.r(__webpack_exports__);
             name: 'users.index'
           });
         }, 2000);
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
@@ -3347,7 +3348,7 @@ var render = function() {
             on: {
               submit: function($event) {
                 $event.preventDefault()
-                return _vm.onSubmit($event)
+                return _vm.onSubmit()
               }
             }
           },
@@ -18332,6 +18333,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   update: function update(id, data) {
     return axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("/api/users/".concat(id), data);
+  },
+  "delete": function _delete(id) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/api/users/".concat(id));
   }
 });
 

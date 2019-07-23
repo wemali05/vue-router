@@ -30,7 +30,12 @@ class UsersController extends Controller
     return new UserResource($user);
     }
 
-    public function destroy(){
+    public function destroy($id){
+        $user = User::findOrFail($id);
+        // $user = User::find($id)->first();
+        // if (!$user) {
+        //     abort(404);
+        // }
         $user->delete();
 
         return response(null, 204);
